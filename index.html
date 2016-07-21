@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<title>Todo App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<style type="text/css" media="screen">
+		.list-group {line-height:30px;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="heading">
+			<h1>Todo List</h1>
+		</div>
+		<div class="row todo-list">
+			<ul class="col-md-3 list-group">
+				<li class="list-group-item clearfix" style=" margin-bottom: 8px;">
+					List 1
+					<span class="pull-right button-group">
+					<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a> 
+						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+					</span>
+				</li>
+				<li class="list-group-item clearfix">
+					List 1
+					<span class="pull-right button-group">
+					<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a> 
+						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+					</span>
+				</li>
+			</ul>
+		</div>
+		<form class="row form-inline" role="form">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Tast Name">
+			</div>
+			<button type="submit" class="btn btn-primary">Add Todos</button>
+		</form>
+	</div>
+	<script type="text/javascript" src="lib/app.js"></script>
+</body>
+</html>
