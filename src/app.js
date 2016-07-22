@@ -1,4 +1,4 @@
-(function($){
+(($) => {
 
 	let appManager = {
 
@@ -19,7 +19,7 @@
 
 			let todoList = $('.todo-list');
 
-			let newTodoItem = `<li class="list-group-item clearfix" style=" margin-bottom: 8px;"> ${newTodo.name} <span class="pull-right button-group"><a href="#" style="margin-right: 8px;" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a><button type="button" id = "delete" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span></li>`;
+			let newTodoItem = `<li class="list-group-item clearfix" contenteditable="true" style=" margin-bottom: 8px;"> <strong>${newTodo.name}</strong> <span class="pull-right button-group"><button type="button" id = "delete" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span></li>`;
 
 			todoList.append(newTodoItem);
 
@@ -31,10 +31,11 @@
 			e.preventDefault();
 
 			$(this).parent().parent().remove();
-		}
+		},
+
 	};
 
-	$(function(){
+	$(() => {
 
 		appManager.init();
 
