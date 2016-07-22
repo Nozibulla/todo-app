@@ -14,31 +14,19 @@
 		<div class="heading">
 			<h1>Todo List</h1>
 		</div>
-		<div class="row todo-list">
-			<ul class="col-md-3 list-group">
-				<li class="list-group-item clearfix" style=" margin-bottom: 8px;">
-					List 1
-					<span class="pull-right button-group">
-					<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a> 
-						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-					</span>
-				</li>
-				<li class="list-group-item clearfix">
-					List 1
-					<span class="pull-right button-group">
-					<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a> 
-						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-					</span>
-				</li>
+		<div class="row">
+			<ul class="col-md-3 list-group todo-list" >
+ 
 			</ul>
 		</div>
 		<form class="row form-inline" role="form">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Tast Name">
+				<input name="todo" type="text" class="form-control" id="todo" placeholder="Tast Name" required="required">
 			</div>
 			<button type="submit" class="btn btn-primary">Add Todos</button>
 		</form>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="lib/app.js"></script>
 </body>
 </html>
