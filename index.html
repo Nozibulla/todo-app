@@ -11,51 +11,65 @@
 	<title>Todo App</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-	<style type="text/css" media="screen">
-
-		.list-group {line-height:30px;}
-
-	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css" />
+	<link rel="stylesheet" href="css/todo.css" />
 
 </head>
 
 <body>
 
-	<div class="container">
+	<div class="container" id="container" style="text-align: center;">
 
-		<div class="heading">
+		<div class="col-md-offset-3">
 
-			<h1>Todo List</h1>
-
-		</div>
-
-		<div class="row">
-
-			<ul class="col-md-3 list-group todo-list" ></ul>
-
-		</div>
-
-		<form class="row form-inline" role="form">
-
-			<div class="form-group">
-
-				<input name="todo" type="text" class="form-control" id="todo" placeholder="Tast Name" required="required">
+			<div class="task-list" id="todo-list">
+				<h3>Todos</h3>
 
 			</div>
 
-			<button type="submit" class="btn btn-primary">Add</button>
+			<div class="task-list">
+				<h3>Add a task</h3>
+				<form id="todo-form">
+					<input type="text" placeholder="Title" />
+					<textarea placeholder="Description"></textarea>
+					<input type="text" id="datepicker" placeholder="Due Date (dd/mm/yyyy)" />
+					<input type="button" class="btn btn-primary" value="Add Task" onclick="todo.add();" />
+				</form>
 
-		</form>
-
+				<input type="button" class="btn btn-primary" value="Clear Data" onclick="todo.clear();" />
+			</div>
+		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="lib/app.js"></script>
+	<script
+	src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
+	integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="
+	crossorigin="anonymous"></script>
 
+	<script type="text/javascript" src="src/app.js"></script>
+
+	<script type="text/javascript">
+
+		$( function() {
+
+			$( "#datepicker" ).datepicker();
+			$( "#datepicker" ).datepicker("option", "dateFormat", "dd/mm/yy");
+			$(".task-container").droppable();
+			$(".todo-task").draggable({ revert: "valid", revertDuration:200 });
+			$( "#todo-list" ).sortable();
+			$( "#todo-list" ).disableSelection();        
+			todo.init();
+
+		});
+
+		
+
+	</script>
+	
 </body>
 
 </html>

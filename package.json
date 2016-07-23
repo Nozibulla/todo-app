@@ -2,8 +2,7 @@
   "name": "my-project",
   "version": "1.0.0",
   "scripts": {
-    "dev": {
-      "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --hot --inline" 
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",

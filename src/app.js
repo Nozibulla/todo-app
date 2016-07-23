@@ -1,44 +1,93 @@
-(($) => {
 
-	let appManager = {
+var todo = todo || {},
+data = JSON.parse(localStorage.getItem("todoData"));
 
-		
-		init : function(){
+data = data || {};
 
-			$('.container').on('submit', this.addTodo);
+((todo, data, $) => {
 
-			$('.container').on('click', '#delete',this.deleteTodo);
+    var defaults = {
+        todoTask: "todo-task",
+        todoHeader: "task-header",
+        todoDate: "task-date",
+        todoDescription: "task-description",
+        taskId: "task-",
+        formId: "todo-form"
+    };
 
-		},
+    todo.init =  () => {
 
-		addTodo: e => {
+        $.each(data, function (index, params) {
+            generateElement(params);
+        });
+    };
 
-			e.preventDefault();
+    /*Render Task to the DOM*/
+    var generateElement = (params) => {
+        
+        var parent = $('#todo-list'),
+        wrapper;
 
-			let newTodo = {name: $('#todo').val()};
+        wrapper = $("<div />", {
+            "class" : defaults.todoTask,
+            "id" : defaults.taskId + params.id,
+            "data" : params.id
+        }).appendTo(parent);
 
-			let todoList = $('.todo-list');
+        $("<div />", {
+            "class" : defaults.todoHeader,
+            "text": params.title
+        }).appendTo(wrapper);
 
-			let newTodoItem = `<li class="list-group-item clearfix" contenteditable="true" style=" margin-bottom: 8px;"> <strong>${newTodo.name}</strong> <span class="pull-right button-group"><button type="button" id = "delete" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span></li>`;
+        $("<div />", {
+            "class" : defaults.todoDate,
+            "text": params.date
+        }).appendTo(wrapper);
 
-			todoList.append(newTodoItem);
+        $("<div />", {
+            "class" : defaults.todoDescription,
+            "text": params.description
+        }).appendTo(wrapper);
 
-			$('#todo').val('');
-		},
+    };
 
-		deleteTodo: function(e) {
+    /* Add A task*/
+    todo.add = () => {
+        var inputs = $("#" + defaults.formId + " :input"),
+        id, title, description, date, tempData;
 
-			e.preventDefault();
+        // console.log(inputs);
 
-			$(this).parent().parent().remove();
-		},
+        title = inputs[0].value;
+        description = inputs[1].value;
+        date = inputs[2].value;
 
-	};
+        id = new Date().getTime();
 
-	$(() => {
+        tempData = {
+            id : id,
+            title: title,
+            date: date,
+            description: description
+        };
 
-		appManager.init();
+        // Saving element in local storage
+        data[id] = tempData;
+        localStorage.setItem("todoData", JSON.stringify(data));
 
-	});
+        // Generate Todo Element
+        generateElement(tempData);
 
-})(jQuery);
+        // Reset Form
+        inputs[0].value = "";
+        inputs[1].value = "";
+        inputs[2].value = "";
+    };
+
+    todo.clear = () => {
+        data = {};
+        localStorage.setItem("todoData", JSON.stringify(data));
+        $("." + defaults.todoTask).remove();
+    };
+
+})(todo, data, jQuery);
