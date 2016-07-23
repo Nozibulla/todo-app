@@ -4,18 +4,17 @@ data = JSON.parse(localStorage.getItem("todoData"));
 
 data = data || {};
 
-((todo, data, $) => {
+(function(todo, data, $) {
 
     var defaults = {
         todoTask: "todo-task",
         todoHeader: "task-header",
         todoDate: "task-date",
         todoDescription: "task-description",
-        taskId: "task-",
         formId: "todo-form"
     };
 
-    todo.init =  () => {
+    todo.init = function () {
 
         $.each(data, function (index, params) {
             generateElement(params);
@@ -23,14 +22,14 @@ data = data || {};
     };
 
     /*Render Task to the DOM*/
-    var generateElement = (params) => {
-        
+    var generateElement = function(params){
+
         var parent = $('#todo-list'),
         wrapper;
 
         wrapper = $("<div />", {
             "class" : defaults.todoTask,
-            "id" : defaults.taskId + params.id,
+            "id" : params.id,
             "data" : params.id
         }).appendTo(parent);
 
@@ -52,7 +51,7 @@ data = data || {};
     };
 
     /* Add A task*/
-    todo.add = () => {
+    todo.add = function() {
         var inputs = $("#" + defaults.formId + " :input"),
         id, title, description, date, tempData;
 
@@ -84,7 +83,7 @@ data = data || {};
         inputs[2].value = "";
     };
 
-    todo.clear = () => {
+    todo.clear = function () {
         data = {};
         localStorage.setItem("todoData", JSON.stringify(data));
         $("." + defaults.todoTask).remove();

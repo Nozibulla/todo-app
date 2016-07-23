@@ -60,13 +60,34 @@
 			$( "#datepicker" ).datepicker("option", "dateFormat", "dd/mm/yy");
 			$(".task-container").droppable();
 			$(".todo-task").draggable({ revert: "valid", revertDuration:200 });
-			$( "#todo-list" ).sortable();
-			$( "#todo-list" ).disableSelection();        
-			todo.init();
+			$( "#todo-list" ).sortable({
+				stop: function( event, ui ) {
+					/*Get all ids of todos in the dom after sorting*/
+					var id = [];
+					$.each($('.todo-task'),function(index, element){
+						id.push(element.id);
+					});
+
+					/*sort localstorage tododata by current dom */
+					var todos = JSON.parse(localStorage.getItem("todoData"));
+					var sorted ={};
+						id.forEach(function(todo) {
+						$.each(todos,function(index, item){
+							if(todo==item.id) sorted[todo] = item;
+						});
+						});
+
+						/*set current dom sorting value to localstorage*/
+						localStorage.setItem("todoData", JSON.stringify(sorted));
+					}
+				});
+
+						$( "#todo-list" ).disableSelection();        
+						todo.init();
 
 		});
 
-		
+
 
 	</script>
 	
