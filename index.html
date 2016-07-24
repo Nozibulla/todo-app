@@ -44,6 +44,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 	<script
 	src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
@@ -63,18 +64,30 @@
 			$( "#todo-list" ).sortable({
 				stop: function( event, ui ) {
 					/*Get all ids of todos in the dom after sorting*/
-					var id = [];
+					const id = [];
 					$.each($('.todo-task'),function(index, element){
 						id.push(element.id);
 					});
 
 					/*sort localstorage tododata by current dom */
-					var todos = JSON.parse(localStorage.getItem("todoData"));
-					var sorted ={};
-						id.forEach(function(todo) {
-						$.each(todos,function(index, item){
-							if(todo==item.id) sorted[todo] = item;
-						});
+					const todos = JSON.parse(localStorage.getItem("todoData"));
+					const sorted ={};
+						// id.forEach(function(todo) {
+						// $.each(todos,function(index, item){
+						// 	if(todo==item.id) sorted[todo] = item;
+
+						// });
+						// });
+						_.each(id, (todo, index, id) => {
+
+							_.findKey(todos, (item) => {
+								
+								if(todo==item.id) 
+
+									return sorted[todo] = item;
+
+							});
+
 						});
 
 						/*set current dom sorting value to localstorage*/
@@ -82,8 +95,8 @@
 					}
 				});
 
-						$( "#todo-list" ).disableSelection();        
-						todo.init();
+			$( "#todo-list" ).disableSelection();        
+			todo.init();
 
 		});
 
