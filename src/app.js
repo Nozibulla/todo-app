@@ -16,18 +16,25 @@ const todo = {};
 
     todo.init =  () => {
         generateElement(data);
+        console.log(data);
     };
 
     /*Render Task to the DOM*/
-    var generateElement = (data) =>{
+    var generateElement = (params) =>{
 
-        const todo_list = _.template('<% _.each(data, function(todo, index, data) { %>' +
+        let all_todos ='', container = $('#todo-list'), todo_list = null;
+
+        todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
             '<div id="<%= todo.id %>" class="todo-task"><button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.date%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div></div>' +
             '<% }); %>'),
+        
+
         all_todos = todo_list({
-            data: data
+            params: params
         }),
-        container = $('#todo-list');
+
+        console.log(todo_list);
+        
 
         container.append(all_todos);
 
@@ -55,12 +62,16 @@ const todo = {};
             tags: tags
         };
 
+        const newTodo = {id: tempData};
+
+        console.log(tempData);
+
         // Saving element in local storage
         data[id] = tempData;
         localStorage.setItem("todoData", JSON.stringify(data));
 
         // Generate Todo Element
-        generateElement(tempData);
+        generateElement(newTodo);
 
         // Reset Form
         inputs[0].value = "";
