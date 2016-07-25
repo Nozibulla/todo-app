@@ -30,10 +30,13 @@
 			<div class="task-list">
 				<h3>Add a task</h3>
 				<form id="todo-form">
-					<input type="text" placeholder="Title" />
-					<textarea placeholder="Description"></textarea>
+					<input type="text" placeholder="Title" id="title" />
+					<textarea placeholder="Description" id="description"></textarea>
 					<input type="text" id="datepicker" placeholder="Due Date (dd/mm/yyyy)" />
-					<input type="button" class="btn btn-primary" value="Add Task" onclick="todo.add();" />
+					<input type="text" placeholder="Tags Seperated by Comma" id="tags" />
+					<input type="hidden"></input>
+					<input type="button" class="btn btn-primary" id="add_button" value="Add Task" onclick="todo.add();" />
+					<input type="button" class="btn btn-primary" id="edit_button" value="Edit Task" onclick="todo.saveEdit();" style="display: none;" />
 				</form>
 
 				<input type="button" class="btn btn-primary" value="Clear Data" onclick="todo.clear();" />
@@ -103,7 +106,7 @@
 
 
 	</script>
-	
+
 </body>
 
 </html>
