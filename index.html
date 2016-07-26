@@ -12,6 +12,7 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.0/fullcalendar.min.css">
 	<link rel="stylesheet" href="css/todo.css" />
 
 </head>
@@ -42,7 +43,9 @@
 				<input type="button" class="btn btn-primary" value="Clear Data" onclick="todo.clear();" />
 			</div>
 		</div>
+		
 	</div>
+	<div id="calendar"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -53,7 +56,12 @@
 	src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
 	integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="
 	crossorigin="anonymous"></script>
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
 
+	<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+	
 	<script type="text/javascript" src="src/app.js"></script>
 
 	<script type="text/javascript">
@@ -61,8 +69,7 @@
 		$( function() {
 
 			$( "#datepicker" ).datepicker();
-			$( "#datepicker" ).datepicker("option", "dateFormat", "dd/mm/yy");
-			$(".task-container").droppable();
+			$( "#datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd");
 			$(".todo-task").draggable({ revert: "valid", revertDuration:200 });
 			$( "#todo-list" ).sortable({
 				stop: function( event, ui ) {
@@ -75,12 +82,7 @@
 					/*sort localstorage tododata by current dom */
 					const todos = JSON.parse(localStorage.getItem("todoData"));
 					const sorted ={};
-						// id.forEach(function(todo) {
-						// $.each(todos,function(index, item){
-						// 	if(todo==item.id) sorted[todo] = item;
-
-						// });
-						// });
+				
 						_.each(id, (todo, index, id) => {
 
 							_.findKey(todos, (item) => {
@@ -100,6 +102,8 @@
 
 			$( "#todo-list" ).disableSelection();        
 			todo.init();
+			// $('#calendar').draggable();
+			todo.calendar();
 
 		});
 

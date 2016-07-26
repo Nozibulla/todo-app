@@ -22,13 +22,15 @@ const todo = {};
         let all_todos ='', container = $('#todo-list'), todo_list = null;
 
         todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
-            '<div id="<%= todo.id %>" class="todo-task"><button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.date%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div></div>' +
+            '<div id="<%= todo.id %>" class="todo-task"><button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div></div>' +
             '<% }); %>'),
         
 
         all_todos = todo_list({
             params: params
-        });        
+        });  
+
+        // console.log(all_todos);      
 
         container.append(all_todos);
 
@@ -51,7 +53,7 @@ const todo = {};
         tempData = {
             id : id,
             title: title,
-            date: date,
+            start: date,
             description: description,
             tags: tags
         };
@@ -66,6 +68,8 @@ const todo = {};
 
         // Generate Todo Element
         generateElement(newTodo);
+
+        // todo.calendar();
 
         // Reset Form
         inputs[0].value = "";
@@ -97,7 +101,7 @@ const todo = {};
 
         inputs[0].value = todo_item.title;
         inputs[1].value = todo_item.description;
-        inputs[2].value = todo_item.date;
+        inputs[2].value = todo_item.start;
         inputs[3].value = todo_item.tags;
         inputs[4].value = todo_item.id;
     };
@@ -121,14 +125,14 @@ const todo = {};
         editedData = {
             id : id,
             title: title,
-            date: date,
+            start: date,
             description: description,
             tags: tags
         }
 
         const selectedDOM = $('#' +editedData.id);
 
-        let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.date%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
+        let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
         
 
         edited_todos = todo_template({
@@ -151,7 +155,33 @@ const todo = {};
         $('#add_button').show();
         $('#edit_button').hide();
 
-    }
+    };
+
+    todo.calendar = () =>{
+
+        const todos = JSON.parse(localStorage.getItem("todoData"));
+        let allevents = '[';
+
+        let todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
+            '{ "title":"<%= todo.title %>", "start":"<%= todo.start %>"  },' +
+            '<% }); %>'),
+
+        all_todos = todo_list({
+            params: todos
+        }); 
+
+        all_todos = all_todos.slice(0, -1);
+
+        allevents += all_todos;
+
+        allevents += ']';
+
+        /*Initialize the calendar*/
+        $('#calendar').fullCalendar({
+            // const todos = JSON.parse(localStorage.getItem("todoData"));
+            events:  JSON.parse(allevents)
+        });
+    };
 
      // Remove task
      const removeElement = function (params) {
