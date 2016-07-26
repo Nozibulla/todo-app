@@ -14,19 +14,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.0/fullcalendar.min.css">
 	<link rel="stylesheet" href="css/todo.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-	<script
-	src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
-	integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="
-	crossorigin="anonymous"></script>
-	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
-
-	<!-- <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script> -->
-	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 
 </head>
 
@@ -61,7 +49,19 @@
 	<div id="calendar"></div>
 
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+	<script
+	src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
+	integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="
+	crossorigin="anonymous"></script>
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+
+	<!-- <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script> -->
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 	
 	<script type="text/javascript" src="src/app.js"></script>
 
@@ -83,23 +83,23 @@
 					/*sort localstorage tododata by current dom */
 					const todos = JSON.parse(localStorage.getItem("todoData"));
 					const sorted ={};
-				
-						_.each(id, (todo, index, id) => {
+					
+					_.each(id, (todo, index, id) => {
 
-							_.findKey(todos, (item) => {
-								
-								if(todo==item.id) 
+						_.findKey(todos, (item) => {
+							
+							if(todo==item.id) 
 
-									return sorted[todo] = item;
-
-							});
+								return sorted[todo] = item;
 
 						});
 
-						/*set current dom sorting value to localstorage*/
-						localStorage.setItem("todoData", JSON.stringify(sorted));
-					}
-				});
+					});
+
+					/*set current dom sorting value to localstorage*/
+					localStorage.setItem("todoData", JSON.stringify(sorted));
+				}
+			});
 
 			$( "#todo-list" ).disableSelection();        
 			todo.init();
