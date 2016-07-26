@@ -2,9 +2,6 @@
 const todo = {};
 
 (($) => {
-
-
-
     const defaults = {
         todoTask: "todo-task",
         todoHeader: "task-header",
@@ -31,10 +28,7 @@ const todo = {};
 
         all_todos = todo_list({
             params: params
-        }),
-
-        console.log(todo_list);
-        
+        });        
 
         container.append(all_todos);
 
@@ -109,7 +103,6 @@ const todo = {};
     };
 
     todo.saveEdit = () => {
-        console.log('This portion is coming soon');
         const inputs = $("#" + defaults.formId + " :input");
         let id, title, description, date, tags, editedData;
 
@@ -132,6 +125,19 @@ const todo = {};
             description: description,
             tags: tags
         }
+
+        const selectedDOM = $('#' +editedData.id);
+
+        let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.date%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
+        
+
+        edited_todos = todo_template({
+            todo: editedData
+        }); 
+
+        selectedDOM.html(edited_todos);
+
+        // console.log(selectedDOM);
 
         // Saving element in local storage
         data[id] = editedData;
