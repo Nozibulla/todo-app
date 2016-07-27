@@ -163,7 +163,7 @@ const todo = {};
         let allevents = '[';
 
         let todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
-            '{ "title":"<%= todo.title %>", "start":"<%= todo.start %>"  },' +
+            '{ "id":"<%=todo.id%>", "title":"<%= todo.title %>", "start":"<%= todo.start %>"  },' +
             '<% }); %>'),
 
         all_todos = todo_list({
@@ -179,6 +179,30 @@ const todo = {};
         /*Initialize the calendar*/
         $('#calendar').fullCalendar({
             editable: true,
+            eventDrop: function(event, delta, revertFunc) {
+                const todoAfterDrag = {
+                    id : event.id,
+                    title: event.title,
+                    start: event.start.format()
+                }
+
+                data[event.id].start = event.start.format();
+                localStorage.setItem("todoData", JSON.stringify(data));
+
+                /*rerender todolist dom*/
+
+                const selectedDOM = $('#' +event.id);
+
+                let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
+
+
+                edited_todos = todo_template({
+                    todo: todoAfterDrag
+                }); 
+
+                selectedDOM.html(edited_todos);
+
+            },
             events:  JSON.parse(allevents)
         });
     };
