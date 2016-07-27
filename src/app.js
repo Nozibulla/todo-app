@@ -178,9 +178,7 @@ const todo = {};
 
         /*Initialize the calendar*/
         $('#calendar').fullCalendar({
-            defaultDate: '2016-06-12',
             editable: true,
-            eventLimit: true,
             events:  JSON.parse(allevents)
         });
     };
