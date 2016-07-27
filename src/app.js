@@ -163,7 +163,7 @@ const todo = {};
         let allevents = '[';
 
         let todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
-            '{ "id":"<%=todo.id%>", "title":"<%= todo.title %>", "start":"<%= todo.start %>"  },' +
+            '{ "id":"<%=todo.id%>", "title":"<%= todo.title %>", "start":"<%= todo.start %>", "description":"<%= todo.description %>", "tags":"<%= todo.tags %>"  },' +
             '<% }); %>'),
 
         all_todos = todo_list({
@@ -183,7 +183,9 @@ const todo = {};
                 const todoAfterDrag = {
                     id : event.id,
                     title: event.title,
-                    start: event.start.format()
+                    start: event.start.format(),
+                    description: event.description,
+                    tags: event.tags,
                 }
 
                 data[event.id].start = event.start.format();
@@ -203,7 +205,14 @@ const todo = {};
                 selectedDOM.html(edited_todos);
 
             },
-            events:  JSON.parse(allevents)
+            events:  JSON.parse(allevents),
+            eventRender: function(event, element) {
+                element.qtip({
+                    content: event.description,
+                    show: 'mouseover',
+                    hide: 'mouseout'
+                });
+            }
         });
     };
 
