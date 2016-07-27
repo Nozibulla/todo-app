@@ -178,7 +178,9 @@ const todo = {};
 
         /*Initialize the calendar*/
         $('#calendar').fullCalendar({
-            // const todos = JSON.parse(localStorage.getItem("todoData"));
+            defaultDate: '2016-06-12',
+            editable: true,
+            eventLimit: true,
             events:  JSON.parse(allevents)
         });
     };
