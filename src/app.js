@@ -2,33 +2,33 @@
 const todo = {};
 
 (($) => {
-    const defaults = {
-        todoTask: "todo-task",
-        todoHeader: "task-header",
-        todoDate: "task-date",
-        todoDescription: "task-description",
-        formId: "todo-form"
-    },
-    data = JSON.parse(localStorage.getItem("todoData"));
+            const defaults = {
+                todoTask: "todo-task",
+                todoHeader: "task-header",
+                todoDate: "task-date",
+                todoDescription: "task-description",
+                formId: "todo-form"
+            },
+            data = JSON.parse(localStorage.getItem("todoData"));
 
-    todo.init =  () => {
-        generateElement(data);
-        console.log(data);
-    };
+            todo.init =  () => {
+                generateElement(data);
+                console.log(data);
+            };
 
-    /*Render Task to the DOM*/
-    var generateElement = (params) =>{
+            /*Render Task to the DOM*/
+            var generateElement = (params) =>{
 
-        let all_todos ='', container = $('#todo-list'), todo_list = null;
+                let all_todos ='', container = $('#todo-list'), todo_list = null;
 
-        todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
-            '<div id="<%= todo.id %>" class="todo-task"><button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div></div>' +
-            '<% }); %>'),
-        
+                todo_list = _.template('<% _.each(params, function(todo, index, params) { %>' +
+                    '<div id="<%= todo.id %>" class="todo-task"><button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-tags"><%= todo.tags %></div></div>' +
+                    '<% }); %>'),
 
-        all_todos = todo_list({
-            params: params
-        });  
+
+                all_todos = todo_list({
+                    params: params
+                });  
 
         // console.log(all_todos);      
 
@@ -98,6 +98,7 @@ const todo = {};
         const inputs = $("#" + defaults.formId + " :input");
 
         todo_item = data[id];
+        //console.log(todo_item);
 
         inputs[0].value = todo_item.title;
         inputs[1].value = todo_item.description;
@@ -132,7 +133,7 @@ const todo = {};
 
         const selectedDOM = $('#' +editedData.id);
 
-        let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
+        let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-tags"><%= todo.tags %></div>'),
         
 
         edited_todos = todo_template({
@@ -146,6 +147,7 @@ const todo = {};
         // Saving element in local storage
         data[id] = editedData;
         localStorage.setItem("todoData", JSON.stringify(data));
+
         // Reset Form
         inputs[0].value = "";
         inputs[1].value = "";
@@ -195,7 +197,7 @@ const todo = {};
 
                 const selectedDOM = $('#' +event.id);
 
-                let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-date"><%= todo.tags %></div>'),
+                let todo_template = _.template('<button id="<%= todo.id %>" class=" pull-right" onclick="todo.edit(this.id);"><span class="glyphicon glyphicon-edit"></button><button id="<%= todo.id %>" class=" pull-right" onclick="todo.remove(this.id);"><span class="glyphicon glyphicon-remove"></button></span><div class="task-header"><%= todo.title %></div><div class="task-date"><%=todo.start%></div><div class="task-description"><%= todo.description %></div><div class="task-task-tags"><%= todo.tags %></div>'),
 
 
                 edited_todos = todo_template({
@@ -222,8 +224,8 @@ const todo = {};
     };
 
     todo.clear =  () => {
-        data = {};
-        localStorage.setItem("todoData", JSON.stringify(data));
+        const resetData = {};
+        localStorage.setItem("todoData", JSON.stringify(resetData));
         $("." + defaults.todoTask).remove();
     };
 
